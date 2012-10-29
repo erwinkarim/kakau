@@ -1,26 +1,37 @@
-<%= form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_tag users_path,:method => :post, :class => 'form-horizontal' do %>
   <div class="control-group">
-    <%= f.label :username, :class => 'control-label' %>
+    <%= label_tag 'Username', nil, :class=>'control-label' %>
     <div class="controls">
-      <%= f.text_field :username, :class => 'text_field' %>
+      <%= text_field_tag 'user', nil, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :email, :class => 'control-label' %>
+    <%= label_tag 'Email', nil, :class=>'control-label' %>
     <div class="controls">
-      <%= f.text_field :email, :class => 'text_field' %>
+      <%= text_field_tag 'email1', nil, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :password, :class => 'control-label' %>
+    <%= label_tag 'Email Again', nil, :class=>'control-label' %>
     <div class="controls">
-      <%= f.text_field :password, :class => 'text_field' %>
+      <%= text_field_tag 'email2', nil, :class => 'text_field' %>
     </div>
+  </div>
+  <div class="control-group">
+    <%= label_tag 'Password', nil, :class=>'control-label' %>
+    <div class="controls">
+      <%= password_field_tag 'pass1', nil, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= label_tag 'Password Again', nil, :class=>'control-label' %>
+    <div class="controls">
+      <%= password_field_tag 'pass2', nil, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= submit_tag 'Create User', :class=> 'btn btn-primary' %>
+    <%= link_to 'Cancel', root_path, :class=>'btn' %>
   </div>
 
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                users_path, :class => 'btn' %>
-  </div>
-<% end %>
+<% end  %> 

@@ -111,4 +111,7 @@ class BoxesController < ApplicationController
     end
   end
 
+  def upload
+      
+  end
 end

@@ -1,11 +1,9 @@
 <%- model_class = Box -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  <h1><%=t @box.name %></h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @box.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:kind) %>:</strong></dt>
   <dd><%= @box.kind %></dd>
   <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
@@ -28,4 +26,6 @@
 <% if @box.kind == 'folder' then %>
   <%= render 'navbar' %>
   <%= render 'view' %>
+<% else %>
+  <p>Show contents of the file </p>
 <% end %>

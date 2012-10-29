@@ -2,7 +2,9 @@ Kakau::Application.routes.draw do
 
 
   resources :users do
-    resources :boxes
+    resources :boxes do
+      get 'upload'
+    end
     get 'view'
   end
 

@@ -9,6 +9,9 @@
         user_boxes_path(params[:user_id],:box_kind=>'file', :parent_box => @root_box),
         :method => :post %>
       </li>
+      <li><%= link_to 'Upload',
+        user_box_upload_path(params[:user_id],@root_box) %>
+      </li>
     </ul>
   </div>
 </div>

@@ -40,7 +40,12 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(params[:user])
+    #email and password check
+    if ( params[:email1] != params[:email2]) || ( params[:pass1] != params[:pass2]) then
+      redirect_to new_user_path, :notice => 'Errors'
+    end
+
+    @user = User.new(:username => params[:user], :password => params[:pass1], :email => params[:email1])
 
     respond_to do |format|
       if @user.save
