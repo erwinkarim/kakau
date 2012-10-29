@@ -1,0 +1,10 @@
+<p>
+	<% if @user.errors.count != 0 then %>
+		Something wrong with user login
+	<% else %>
+		Login successful
+	<% end %>
+</p>
+<p>
+	Login as user <%= params[:user] %> with password <%= params[:pass] %>
+</p>

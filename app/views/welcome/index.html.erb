@@ -12,9 +12,9 @@
       <div class="span5">
         <h1>Login</h1>
         <p>
-          <%= form_tag root_path do %>
-            <%= label_tag 'email_label', 'email:' %> 
-            <%= text_field_tag 'email' %> 
+          <%= form_tag user_login_path('dologin') do %>
+            <%= label_tag 'username_label', 'Username:' %> 
+            <%= text_field_tag 'user' %> 
             <%= label_tag 'password_label', 'Password:' %>
             <%= text_field_tag 'pass' %>
             <br />

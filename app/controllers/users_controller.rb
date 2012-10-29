@@ -94,4 +94,19 @@ class UsersController < ApplicationController
     @user = User.where("username = ?", params[:user_id]).first
     @boxes = @user.boxes.all
   end
+
+	# POST   /users/:user_id/login(.:format)
+	def login
+		#login verification stuff
+		@user = User.where("username = ?", params[:user]).first
+		if @user.nil? then
+			@user = User.new
+			@user.errors.add(:username, 'User does not exists')
+		else
+			#user is valid, now check for password
+			if @user.password != params[:pass] then
+				@user.errors.add(:password, 'Password invalid')
+			end
+		end 
+	end
 end
