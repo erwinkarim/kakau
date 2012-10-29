@@ -44,6 +44,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        #create root folder here
+        @box = @user.boxes.new(:kind => 'root', :name => 'topLVL') 
+        @box.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -79,5 +82,11 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :no_content }
     end
+  end
+
+  # GET    /users/:user_id/view(.:format)
+  def view
+    @user = User.where("username = ?", params[:user_id]).first
+    @boxes = @user.boxes.all
   end
 end

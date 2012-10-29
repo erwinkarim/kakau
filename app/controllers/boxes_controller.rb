@@ -1,10 +1,13 @@
+require 'uuidtools'
+require 'base64'
 class BoxesController < ApplicationController
   # GET /boxes
   # GET /boxes.json
   # GET /users/:user_id/boxes(.:format)
   def index
     @user = User.where("username = ?", params[:user_id]).first
-    @boxes = @user.boxes.all
+    @root_box = @user.boxes.where("kind = ?", "root").first.id
+    @boxes = Box.where("parent = ?", @root_box)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,6 +20,10 @@ class BoxesController < ApplicationController
   # GET    /users/:user_id/boxes/:id(.:format)
   def show
     @box = Box.find(params[:id])
+    @root_box = @box
+    if @box.kind == 'folder' then
+      @boxes = Box.where("parent = ?", params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -29,7 +36,7 @@ class BoxesController < ApplicationController
   # GET    /users/:user_id/boxes/new(.:format)
   def new
     @user = User.where("username = ?", params[:user_id]).first
-    @box = @user.boxes.new
+    @box = @user.boxes.new(:kind => params[:box_kind], :parent=>params[:parent_box])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,11 +55,14 @@ class BoxesController < ApplicationController
   # POST   /users/:user_id/boxes(.:format)
   def create
     @user = User.where("username = ?", params[:user_id]).first
-    @box = Box.new(params[:box])
+    #@box = Box.new(params[:box])
+    @box = @user.boxes.new(:name=> Base64.encode64(UUIDTools::UUID.random_create)[0..8] ,
+       :kind=>params[:box_kind], :parent=>params[:parent_box])
 
     respond_to do |format|
       if @box.save
-        format.html { redirect_to @box, notice: 'Box was successfully created.' }
+        #format.html { redirect_to @box, notice: 'Box was successfully created.' }
+        format.html { redirect_to :back }
         format.json { render json: @box, status: :created, location: @box }
       else
         format.html { render action: "new" }
@@ -83,11 +93,22 @@ class BoxesController < ApplicationController
   # DELETE /users/:user_id/boxes/:id(.:format)
   def destroy
     @box = Box.find(params[:id])
+    #get every child
+    boxlist = Box.box_child_list(@box)
+
     @box.destroy
 
+    if !boxlist.empty? then
+      #kill every child
+      boxlist.flatten.each do |bl|
+        bl.destroy
+      end
+    end
+
     respond_to do |format|
-      format.html { redirect_to boxes_url }
+      format.html { redirect_to :back }
       format.json { head :no_content }
     end
   end
+
 end
