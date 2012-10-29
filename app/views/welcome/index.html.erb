@@ -1,0 +1,26 @@
+<div class="hero-unit span12">
+  <h1>Welcome to Kakau</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
+</div>
+<div class="span12">
+  <div class="row">
+      <div class="span6">
+        <h1>Register</h1>
+        <p>Register here</p>
+        <p><%= link_to 'Register',new_user_path,:class=>'btn btn-large' %></p>
+      </div>
+      <div class="span5">
+        <h1>Login</h1>
+        <p>
+          <%= form_tag root_path do %>
+            <%= label_tag 'email_label', 'email:' %> 
+            <%= text_field_tag 'email' %> 
+            <%= label_tag 'password_label', 'Password:' %>
+            <%= text_field_tag 'pass' %>
+            <br />
+            <%= submit_tag 'Login',:class=>'btn' %>
+          <% end %>
+        </p>
+      </div>
+  </div>
+</div>
