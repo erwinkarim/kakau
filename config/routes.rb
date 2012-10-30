@@ -4,6 +4,7 @@ Kakau::Application.routes.draw do
   resources :users do
     resources :boxes do
       get 'upload'
+      post 'sendfiles'
     end
     get 'view'
     post 'login'

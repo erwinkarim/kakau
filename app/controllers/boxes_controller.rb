@@ -20,8 +20,9 @@ class BoxesController < ApplicationController
   # GET    /users/:user_id/boxes/:id(.:format)
   def show
     @box = Box.find(params[:id])
+
     @root_box = @box
-    if @box.kind == 'folder' then
+    if @box.kind == 'folder' || @box.kind == 'root' then
       @boxes = Box.where("parent = ?", params[:id])
     end
 
@@ -93,6 +94,7 @@ class BoxesController < ApplicationController
   # DELETE /users/:user_id/boxes/:id(.:format)
   def destroy
     @box = Box.find(params[:id])
+    parent_box = @box.parent
     #get every child
     boxlist = Box.box_child_list(@box)
 
@@ -106,7 +108,7 @@ class BoxesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to user_box_path(params[:user_id], parent_box) }
       format.json { head :no_content }
     end
   end
@@ -114,4 +116,16 @@ class BoxesController < ApplicationController
   def upload
       
   end
+
+  def sendfiles 
+    # create a new box
+    # place the file on the server
+    # got back to the parents box
+    @user = User.where("username = ?", params[:user_id]).first
+    @box = @user.boxes.new( :kind=>'file', :parent=>params[:box_id])
+    @box.avatar = params[:file]
+    @box.name = @box.avatar.identifier
+    @box.save!
+  end
+
 end

@@ -5,6 +5,7 @@ class CreateBoxes < ActiveRecord::Migration
       t.string :kind
       t.references :user
       t.integer :parent
+      t.string :avatar
 
       t.timestamps
     end

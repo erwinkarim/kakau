@@ -11,6 +11,7 @@
   <div class="alert alert-success">
     <h4>Login successful</h4>
     Going to your boxes site
+    <meta http-equiv="REFRESH" content="3;<%= user_boxes_path(@user.username) %>">
   </div>
 <% end %>
 <div class="span5 offset6">

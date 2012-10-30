@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20121029030822) do
     t.string   "kind"
     t.integer  "user_id"
     t.integer  "parent"
+    t.string   "avatar"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
