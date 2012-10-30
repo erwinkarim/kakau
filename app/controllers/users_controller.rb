@@ -13,7 +13,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
+    @user = User.where("username = ?", params[:id]).first
 
     respond_to do |format|
       format.html # show.html.erb
@@ -106,7 +107,15 @@ class UsersController < ApplicationController
       #user is valid, now check for password
       if @user.password != params[:pass] then
         @user.errors.add(:password, 'invalid')
+      else
+        session[:username] = @user.username
       end
     end 
+  end
+  
+  def logout
+    #reset session
+    session[:username] = nil
+    redirect_to root_path
   end
 end

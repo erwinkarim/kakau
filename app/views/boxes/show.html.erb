@@ -27,7 +27,13 @@
   <%= render 'navbar' %>
   <%= render 'view' %>
 <% else %>
-  <div class="well well-large">
-    <%= render :file => Rails.root.to_s + '/public' + @box.avatar.url %>
-  </div>
+  <% if @box.avatar.url.include? '.txt' then %> 
+    <pre class="well well-large">
+      <%= render :file => @box.avatar.current_path %>
+    </pre>
+  <% else %>
+    <div class="well well-large">
+      Unable to show. not a Text format
+    </div>
+  <% end %>
 <% end %>
