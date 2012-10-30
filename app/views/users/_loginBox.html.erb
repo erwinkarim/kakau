@@ -1,0 +1,18 @@
+<h1>Login</h1>
+<p>
+  <%= form_tag user_login_path('dologin') do %>
+    <div class="control-group">
+    <%= label_tag 'username_label', 'Username:' %> 
+    <%= text_field_tag 'user' %> 
+    </div>
+    <div class="control-group">
+    <%= label_tag 'password_label', 'Password:' %>
+    <%= password_field_tag 'pass' %>
+    </div>
+    <div class="control-group">
+      <%= label_tag 'remember',(check_box_tag 'remember')+' Remember Me' %>
+    </div>
+    <br />
+    <%= submit_tag 'Login',:class=>'btn' %>
+  <% end %>
+</p>

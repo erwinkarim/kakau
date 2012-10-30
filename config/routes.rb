@@ -6,6 +6,8 @@ Kakau::Application.routes.draw do
       get 'upload'
     end
     get 'view'
+    post 'login'
+    get 'logout'
   end
 
   # The priority is based upon order of creation:

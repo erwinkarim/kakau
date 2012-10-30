@@ -10,17 +10,7 @@
         <p><%= link_to 'Register',new_user_path,:class=>'btn btn-large' %></p>
       </div>
       <div class="span5">
-        <h1>Login</h1>
-        <p>
-          <%= form_tag user_login_path('dologin') do %>
-            <%= label_tag 'username_label', 'Username:' %> 
-            <%= text_field_tag 'user' %> 
-            <%= label_tag 'password_label', 'Password:' %>
-            <%= text_field_tag 'pass' %>
-            <br />
-            <%= submit_tag 'Login',:class=>'btn' %>
-          <% end %>
-        </p>
+        <%= render "users/loginBox" %>
       </div>
   </div>
 </div>
