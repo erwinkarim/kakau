@@ -1,6 +1,8 @@
 Kakau::Application.routes.draw do
 
 
+  devise_for :users
+
   resources :users do
     resources :boxes do
       get 'upload'

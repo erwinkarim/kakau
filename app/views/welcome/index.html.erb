@@ -7,10 +7,15 @@
       <div class="span6">
         <h1>Register</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
-        <p><%= link_to 'Register',new_user_path,:class=>'btn btn-large' %></p>
+        <p><%= link_to 'Register',new_user_registration_path,:class=>'btn btn-large' %></p>
       </div>
       <div class="span5">
-        <%= render "users/loginBox" %>
+        <% if user_signed_in? then %>
+          Welcome <%= current_user.email %>
+          <%= link_to 'Logout', destroy_user_session_path, :class=>'btn btn-large',:method=>:delete%>
+        <% else %>
+          <%= link_to 'Login', new_user_session_path, :class=>'btn btn-large' %>
+        <% end %>
       </div>
   </div>
 </div>
