@@ -41,23 +41,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    #check for email
-    @user = User.new(:username => params[:user])
-    if ( params[:email1] == params[:email2]) then
-      @user.email = params[:email1]
-    end
-
-    #check for password
-    if ( params[:pass1] == params[:pass2]) then
-      @user.password = params[:pass1]
-    end
-
     respond_to do |format|
-      if @user.errors.count != 0 then
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-  
       if @user.save
         #create root folder here
         @box = @user.boxes.new(:kind => 'root', :name => 'rootDir') 
@@ -65,12 +49,6 @@ class UsersController < ApplicationController
         format.html { redirect_to user_path(@user.username) } 
         format.json { render json: @user, status: :created, location: @user }
       else
-        if ( params[:email1] != params[:email2]) then
-          @user.errors.add(:email, 'does not match')
-        end
-        if ( params[:pass1] != params[:pass2]) then
-          @user.errors.add(:password, 'does not match')
-        end
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

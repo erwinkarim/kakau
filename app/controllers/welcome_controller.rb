@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
   def index
-    if !session[:username].nil? then
-      redirect_to user_boxes_path(session[:username])
+    if user_signed_in? then
+      redirect_to user_boxes_path(current_user.username)
     end
   end
 end

@@ -14,7 +14,7 @@
           <h1><Welcome <%= current_user.username %></h1>
           <%= link_to 'Logout', destroy_user_session_path, :class=>'btn btn-large',:method=>:delete%>
         <% else %>
-          <%= link_to 'Login', new_user_session_path, :class=>'btn btn-large' %>
+          <%= render :template => 'devise/sessions/new' %>
         <% end %>
       </div>
   </div>
