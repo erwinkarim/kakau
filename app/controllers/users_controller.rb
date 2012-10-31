@@ -41,21 +41,36 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    #email and password check
-    if ( params[:email1] != params[:email2]) || ( params[:pass1] != params[:pass2]) then
-      redirect_to new_user_path, :notice => 'Errors'
+    #check for email
+    @user = User.new(:username => params[:user])
+    if ( params[:email1] == params[:email2]) then
+      @user.email = params[:email1]
     end
 
-    @user = User.new(:username => params[:user], :password => params[:pass1], :email => params[:email1])
+    #check for password
+    if ( params[:pass1] == params[:pass2]) then
+      @user.password = params[:pass1]
+    end
 
     respond_to do |format|
+      if @user.errors.count != 0 then
+        format.html { render action: "new" }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+  
       if @user.save
         #create root folder here
-        @box = @user.boxes.new(:kind => 'root', :name => 'topLVL') 
+        @box = @user.boxes.new(:kind => 'root', :name => 'rootDir') 
         @box.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to user_path(@user.username) } 
         format.json { render json: @user, status: :created, location: @user }
       else
+        if ( params[:email1] != params[:email2]) then
+          @user.errors.add(:email, 'does not match')
+        end
+        if ( params[:pass1] != params[:pass2]) then
+          @user.errors.add(:password, 'does not match')
+        end
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

@@ -48,7 +48,8 @@ class BoxesController < ApplicationController
   # GET /boxes/1/edit
   # GET    /users/:user_id/boxes/:id
   def edit
-    @box = Box.find(params[:id])
+    @user = User.where("username = ?", params[:user_id]).first
+    @box = @user.boxes.find(params[:id])
   end
 
   # POST /boxes
@@ -80,7 +81,7 @@ class BoxesController < ApplicationController
 
     respond_to do |format|
       if @box.update_attributes(params[:box])
-        format.html { redirect_to @box, notice: 'Box was successfully updated.' }
+        format.html { redirect_to user_box_path(params[:user_id], params[:id]), notice: 'Box was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -126,6 +127,8 @@ class BoxesController < ApplicationController
     @box.avatar = params[:file]
     @box.name = @box.avatar.identifier
     @box.save!
+
+    redirect_to user_box_path(@user.username, @box.id)
   end
 
 end

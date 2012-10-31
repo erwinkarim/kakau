@@ -1,6 +1,6 @@
 <%- model_class = Box -%>
 <div class="page-header">
-  <h1><%=t @box.name %></h1>
+  <h1><%= @box.name %></h1>
 </div>
 
 <dl class="dl-horizontal">
@@ -27,7 +27,7 @@
   <%= render 'navbar' %>
   <%= render 'view' %>
 <% else %>
-  <% if @box.avatar.url.include? '.txt' then %> 
+  <% if @box.avatar.url.to_s.include? '.txt' then %> 
     <pre class="well well-large">
       <%= render :file => @box.avatar.current_path %>
     </pre>

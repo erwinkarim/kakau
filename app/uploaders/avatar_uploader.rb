@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'carrierwave/processing/mime_types'
+
 class AvatarUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
@@ -9,6 +11,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
   # include Sprockets::Helpers::RailsHelper
   # include Sprockets::Helpers::IsolatedHelper
+  #
+  include CarrierWave::MimeTypes
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -52,4 +56,5 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
+  process :set_content_type
 end
