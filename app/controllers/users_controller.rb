@@ -41,11 +41,10 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+      
+    #@user = params[:user] 
     respond_to do |format|
       if @user.save
-        #create root folder here
-        @box = @user.boxes.new(:kind => 'root', :name => 'rootDir') 
-        @box.save
         format.html { redirect_to user_path(@user.username) } 
         format.json { render json: @user, status: :created, location: @user }
       else

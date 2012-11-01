@@ -6,6 +6,9 @@ class BoxesController < ApplicationController
   # GET /users/:user_id/boxes(.:format)
   def index
     @user = User.where("username = ?", params[:user_id]).first
+    if @user.boxes.empty? then
+      Box.create_root(@user.id) 
+    end
     @root_box = @user.boxes.where("kind = ?", "root").first.id
     @boxes = Box.where("parent = ?", @root_box)
 

@@ -18,5 +18,10 @@ class Box < ActiveRecord::Base
     
     return boxlist
   end
-  
+
+  def self.create_root(user_id)
+    @user = User.find(user_id)
+    @box = @user.boxes.new(:kind => 'root', :name => 'rootDir') 
+    @box.save
+  end  
 end
